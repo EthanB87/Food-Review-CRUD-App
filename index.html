@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <title>EB Feedback A2</title>
+        <script src="js/lib/jquery-2.1.4.js"></script>
+        <script src="js/lib/jquery.mobile-1.4.5.js"></script>
+        <link rel="stylesheet" href="css/lib/jquery.mobile-1.4.5.css">
+        <script src="js/lib/jquery.validate.js"></script>
+        <script src="js/ebdatabase.js"></script>
+        <script src="js/ebDAL.js"></script>
+        <script src="js/ebutil.js"></script>
+        <script src="js/ebfacade.js"></script>
+        <script src="js/ebglobal.js"></script>
+        <link rel="stylesheet" href="css/ebmystyle.css">
+    </head>
+    <body>
+        <!--home page-->
+        <div id="ebHomePage" data-role="page">
+            <header data-role="header" data-theme="a" data-position="fixed">
+                <h1> EB Feedback A3 </h1>
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li><a href="#ebHomePage" data-icon="home" class="ui-btn-active
+                        ui-state-persist">Home</a></li>
+                        <li><a href="#ebAddFeedbackPage" data-icon="plus">Add</a></li>
+                        <li><a href="#ebViewFeedbackPage" data-icon="grid">Reviews</a></li>
+                        <li><a href="#ebSettingsPage" data-icon="gear">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <section data-role="content">
+                <h1 class="center">Ethan Brockman's Feedback A3 App</h1>
+                <p>Welcome to my jQuery CRUD web app keep track of different places you visited along with
+                    your reviews</p>
+            </section>
+            <footer data-role="footer" data-theme="a" data-position="fixed">
+                <h1> &copy; 2024 Ethan Brockman </h1>
+            </footer>
+        </div>
+
+        <!--add page-->
+        <div id="ebAddFeedbackPage" data-role="page">
+            <header data-role="header" data-theme="a" data-position="fixed">
+                <h1> Add a Feedback </h1>
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li><a href="#ebHomePage" data-icon="home">Home</a></li>
+                        <li><a href="#ebAddFeedbackPage" data-icon="plus"class="ui-btn-active
+                        ui-state-persist">Add</a></li>
+                        <li><a href="#ebViewFeedbackPage" data-icon="grid">Reviews</a></li>
+                        <li><a href="#ebSettingsPage" data-icon="gear">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <section data-role="content">
+                <div id="mainFormDiv">
+                    <form id="formAddReview" name="formAddReview">
+                        <label for="txtNameAdd">Business Name</label>
+                        <input type="text" id="txtNameAdd" name="txtNameAdd" data-clear-btn="true">
+
+                        <label for="cmbType">Type:</label>
+                        <select id="cmbType" name="cmbType"></select>
+
+                        <label for="txtEmailAdd">Business Email:</label>
+                        <input type="text" id="txtEmailAdd" name="txtEmailAdd" data-clear-btn="true">
+
+                        <label for="txtareaCommentsAdd">Reviewer Comments:</label>
+                        <textarea id="txtareaCommentsAdd" name="txtareaCommentsAdd"></textarea>
+
+                        <label for="txtReviewDateAdd">Review Date:</label>
+                        <input type="date" id="txtReviewDateAdd" name="txtReviewDateAdd" data-clear-btn="true">
+
+                        <label for="chkAddRatings">Do you want to add your ratings?</label>
+                        <input type="checkbox" id="chkAddRatings" name="chkAddRatings">
+
+                        <div id="ratingSection">
+                            <label for="txtQuality">Food Quality (0-5):</label>
+                            <input type="number" id="txtQuality" name="txtQuality" value="0">
+
+                            <label for="txtService">Service (0-5):</label>
+                            <input type="number" id="txtService" name="txtService" value="0">
+
+                            <label for="txtValue">Value (0-5):</label>
+                            <input type="number" id="txtValue" name="txtValue" value="0">
+
+                            <label for="txtOverallRating">Overall Rating (calculated):</label>
+                            <input type="text" id="txtOverallRating" name="txtOverallRating" readonly>
+                        </div>
+
+                        <button type="button" id="btnSave" name="btnSave" data-inline="true"
+                                class="ui-btn-active">Save
+                        </button>
+                    </form>
+                </div>
+            </section>
+            <footer data-role="footer" data-theme="a" data-position="fixed">
+                <h1> &copy; 2024 Ethan Brockman </h1>
+            </footer>
+        </div>
+
+        <!--feedback page-->
+        <div id="ebViewFeedbackPage" data-role="page">
+            <header data-role="header" data-theme="a" data-position="fixed">
+                <h1> List of Reviews </h1>
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li><a href="#ebHomePage" data-icon="home">Home</a></li>
+                        <li><a href="#ebAddFeedbackPage" data-icon="plus">Add</a></li>
+                        <li><a href="#ebViewFeedbackPage" data-icon="grid" class="ui-btn-active
+                        ui-state-persist">Reviews</a></li>
+                        <li><a href="#ebSettingsPage" data-icon="gear">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <section data-role="content">
+                <ul id="lstViewFeedback" data-role="listview" class="ui-listview-inset"></ul>
+            </section>
+            <footer data-role="footer" data-theme="a" data-position="fixed">
+                <h1> &copy; 2024 Ethan Brockman </h1>
+            </footer>
+        </div>
+
+        <div id="ebModifyFeedbackPage" data-role="page">
+            <header data-role="header" data-theme="a" data-position="fixed">
+                <h1> Modify Feedback </h1>
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li><a href="#ebHomePage" data-icon="home">Home</a></li>
+                        <li><a href="#ebAddFeedbackPage" data-icon="plus"class="ui-btn-active
+                        ui-state-persist">Add</a></li>
+                        <li><a href="#ebViewFeedbackPage" data-icon="grid">Reviews</a></li>
+                        <li><a href="#ebSettingsPage" data-icon="gear">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <section data-role="content">
+                <div id="modifyDiv">
+                    <form id="formModifyReview" name="formModifyReview">
+                        <label for="txtNameModify">Business Name</label>
+                        <input type="text" id="txtNameModify" name="txtNameModify" data-clear-btn="true">
+
+                        <label for="cmbTypeModify">Type:</label>
+                        <select id="cmbTypeModify" name="cmbTypeModify"></select>
+
+                        <label for="txtEmailModify">Business Email:</label>
+                        <input type="text" id="txtEmailModify" name="txtEmailModify" data-clear-btn="true">
+
+                        <label for="txtareaCommentsModify">Reviewer Comments:</label>
+                        <textarea id="txtareaCommentsModify" name="txtareaCommentsModify"></textarea>
+
+                        <label for="txtReviewDateModify">Review Date:</label>
+                        <input type="date" id="txtReviewDateModify" name="txtReviewDateModify" data-clear-btn="true">
+
+                        <label for="chkModifyRatings">Do you want to add your ratings?</label>
+                        <input type="checkbox" id="chkModifyRatings" name="chkModifyRatings">
+
+                        <div id="modifyRatingSection">
+                            <label for="txtQualityModify">Food Quality (0-5):</label>
+                            <input type="number" id="txtQualityModify" name="txtQualityModify" value="0">
+
+                            <label for="txtServiceModify">Service (0-5):</label>
+                            <input type="number" id="txtServiceModify" name="txtServiceModify" value="0">
+
+                            <label for="txtValueModify">Value (0-5):</label>
+                            <input type="number" id="txtValueModify" name="txtValueModify" value="0">
+
+                            <label for="txtOverallRatingModify">Overall Rating (calculated):</label>
+                            <input type="text" id="txtOverallRatingModify" name="txtOverallRatingModify" readonly>
+                        </div>
+                        <div id="centrediv">
+                            <div data-role="controlgroup" data-type="horizontal">
+                                <button type="button" id="btnCancel" name="btnCancel" data-inline="true">Cancel</button>
+                                <button type="button" id="btnDelete" name="btnDelete" data-inline="true"
+                                        data-theme="b">Delete</button>
+                                <button type="button" id="btnUpdate" name="btnUpdate" data-inline="true"
+                                        class="ui-btn-active">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <footer data-role="footer" data-theme="a" data-position="fixed">
+                <h1> &copy; 2024 Ethan Brockman </h1>
+            </footer>
+        </div>
+
+        <!--Settings page-->
+        <div id="ebSettingsPage" data-role="page">
+            <header data-role="header" data-theme="a" data-position="fixed">
+                <h1> Settings </h1>
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li><a href="#ebHomePage" data-icon="home">Home</a></li>
+                        <li><a href="#ebAddFeedbackPage" data-icon="plus">Add</a></li>
+                        <li><a href="#ebViewFeedbackPage" data-icon="grid">Reviews</a></li>
+                        <li><a href="#ebSettingsPage" data-icon="gear" class="ui-btn-active
+                        ui-state-persist">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <section data-role="content">
+                <label for="txtDefaultEmailAdd">Default Reviewer Email:</label>
+                <input type="text" id="txtDefaultEmailAdd" name="txtDefaultEmailAdd" data-clear-btn="true">
+
+                <button type="button" id="btnSaveDefaults" name="btnSaveDefaults"
+                        class="ui-btn-active">Save Defaults
+                </button>
+                <button type="button" id="btnClearAll" name="btnClearAll" data-theme="b">Clear All Reviews</button>
+            </section>
+            <footer data-role="footer" data-theme="a" data-position="fixed">
+                <h1> &copy; 2024 Ethan Brockman </h1>
+            </footer>
+        </div>
+    </body>
+</html>
